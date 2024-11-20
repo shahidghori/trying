@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR Portal Door with 360° Video</title>
+  
+  <!-- Include A-Frame and AR.js libraries -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+  
+  <style>
+    body { margin: 0; overflow: hidden; }
+    #scene { width: 100vw; height: 100vh; }
+    #loading-screen { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 20px; }
+  </style>
+</head>
+
+<body style="margin: 0;">
+  <div id="loading-screen">Loading AR content...</div>
+  
+  <!-- A-Frame AR Scene (markerless AR) -->
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false">
+    
+    <!-- Camera for AR view -->
+    <a-camera position="0 0 0" look-controls="enabled: false;"></a-camera>
+    
+    <!-- Portal Frame -->
+    <a-box position="0 1.5 -3" width="1" height="2" depth="0.1" color="white">
+      <!-- Replace with a valid 360 video -->
+      <a-asset-item id="portal-video" src="https://storage.googleapis.com/vr-360-video/360_video.mp4"></a-asset-item>
+      <a-video src="#portal-video" width="3" height="2" position="0 0 0" rotation="0 0 0" loop="true"></a-video>
+    </a-box>
+    
+    <!-- AR.js background image to cover all the world -->
+    <a-entity geometry="primitive: sphere; radius: 5000" material="shader: flat; src: https://storage.googleapis.com/vr-360-video/360_video.mp4" scale="-1 1 1"></a-entity>
+    
+  </a-scene>
+
+  <script>
+    // Remove loading screen once A-Frame and AR content are ready
+    document.querySelector('a-scene').addEventListener('loaded', function () {
+      document.getElementById('loading-screen').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
